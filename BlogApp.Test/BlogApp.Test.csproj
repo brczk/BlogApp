@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogApp.Logic\BlogApp.Logic.csproj" />
+    <ProjectReference Include="..\BlogApp.Models\BlogApp.Models.csproj" />
+    <ProjectReference Include="..\BlogApp.Repository\BlogApp.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
