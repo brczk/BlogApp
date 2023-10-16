@@ -15,5 +15,6 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.14" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.14" />
 	</ItemGroup>
 </Project>
