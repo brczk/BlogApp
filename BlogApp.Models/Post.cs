@@ -17,8 +17,12 @@ namespace BlogApp.Models
         [StringLength(50)]
         public string PostTitle { get; set; }
         [Required]
+        [StringLength(50)]
+        public string PostAuthor { get; set; }
+        [Required]
         [StringLength(240)]
         public string PostBody { get; set; }
+
 
         [ForeignKey(nameof(Blog))]
         public int BlogId { get; set; }
