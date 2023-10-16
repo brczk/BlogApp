@@ -7,6 +7,19 @@ namespace BlogApp.Models
 {
     public class Blog
     {
+        public Blog() 
+        {
+            Posts = new HashSet<Post>();
+        }
+
+        public Blog(int id, string blogName, string url)
+        {
+            Id = id;
+            BlogName = blogName;
+            URL = url;
+            Posts = new HashSet<Post>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

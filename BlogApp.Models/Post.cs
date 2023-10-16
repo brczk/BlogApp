@@ -10,6 +10,21 @@ namespace BlogApp.Models
 {
     public class Post
     {
+        public Post()
+        {
+            Comments = new HashSet<Comment>();
+        }
+
+        public Post(int id, string postTitle, string postAuthor, string postBody, int blogId)
+        {
+            Id = id;
+            PostTitle = postTitle;
+            PostAuthor = postAuthor;
+            PostBody = postBody;
+            BlogId = blogId;
+            Comments = new HashSet<Comment>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

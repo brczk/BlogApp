@@ -5,6 +5,14 @@ namespace BlogApp.Models
 {
     public class Comment
     {
+        public Comment(int id, string userName, string commentBody, int postId)
+        {
+            Id = id;
+            UserName = userName;
+            CommentBody = commentBody;
+            PostId = postId;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
