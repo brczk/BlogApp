@@ -12,7 +12,7 @@ namespace BlogApp.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PostId { get; set; }
+        public int Id { get; set; }
         [Required]
         [StringLength(50)]
         public string PostTitle { get; set; }

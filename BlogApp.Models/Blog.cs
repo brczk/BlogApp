@@ -9,7 +9,7 @@ namespace BlogApp.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BlogId { get; set; }
+        public int Id { get; set; }
         [Required]
         [StringLength(240)]
         public string BlogName { get; set; }
