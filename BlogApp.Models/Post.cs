@@ -20,6 +20,7 @@ namespace BlogApp.Models
         [StringLength(240)]
         public string PostBody { get; set; }
 
+        [ForeignKey(nameof(Blog))]
         public int BlogId { get; set; }
         public virtual Blog Blog { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

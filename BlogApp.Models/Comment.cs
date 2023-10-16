@@ -14,6 +14,7 @@ namespace BlogApp.Models
         [Required]
         [StringLength(240)]
         public string CommentBody { get; set; }
+        [ForeignKey(nameof(Post))]
         public int PostId { get; set; }
         public virtual Post Post { get; set; }
     }
