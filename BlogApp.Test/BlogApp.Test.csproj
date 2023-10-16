@@ -10,4 +10,8 @@
     <ProjectReference Include="..\BlogApp.Repository\BlogApp.Repository.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+	</ItemGroup>
+
 </Project>
