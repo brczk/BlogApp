@@ -26,7 +26,9 @@ namespace BlogApp.Models
 
         [ForeignKey(nameof(Blog))]
         public int BlogId { get; set; }
+        [NotMapped]
         public virtual Blog Blog { get; set; }
+        [NotMapped]
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace BlogApp.Models
         [Required]
         [StringLength(100)]
         public string URL { get; set;}
+        [NotMapped]
         public virtual ICollection<Post> Posts { get; set; }
     }
 }

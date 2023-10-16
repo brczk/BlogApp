@@ -16,6 +16,7 @@ namespace BlogApp.Models
         public string CommentBody { get; set; }
         [ForeignKey(nameof(Post))]
         public int PostId { get; set; }
+        [NotMapped]
         public virtual Post Post { get; set; }
     }
 }
