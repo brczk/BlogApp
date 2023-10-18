@@ -1,7 +1,7 @@
 ﻿using BlogApp.Models;
 using BlogApp.Repository.Database;
 using BlogApp.Repository.Interfaces;
-using MovieDbApp.Repository.GenericRepository;
+using BlogApp.Repository.GenericRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

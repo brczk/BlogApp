@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BlogApp.Repository.Database;
 using BlogApp.Repository.Interfaces;
 
-namespace MovieDbApp.Repository.GenericRepository
+namespace BlogApp.Repository.GenericRepository
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
