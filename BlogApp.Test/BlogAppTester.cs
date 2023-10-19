@@ -6,7 +6,7 @@ using System.Linq;
 namespace BlogApp.Test
 {
     [TestFixture]
-    public class BlogRepoTester
+    public class BlogAppTester
     {
         [Test]
         public void CreationTest()
