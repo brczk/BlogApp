@@ -24,31 +24,23 @@ namespace BlogApp.Test
         [SetUp]
         public void Init()
         {
-            var comments = new List<Comment>();
-            var posts = new List<Post>()
+            var comments = new List<Comment>()
             {
-                new Post(1, "[author8 post's title]", "author8", "[author8 post's body]", 1),
-                new Post(2, "[author12 post's title]", "author12", "[author12 post's body]", 1),
-                new Post(3, "[author23 post's title]", "author23", "[author23 post's body]", 1),
-                new Post(4, "[author2 post's title]", "author2", "[author2 post's body]", 2),
-                new Post(5, "[author18 post's title]", "author18", "[author18 post's body]", 2),
-                new Post(6, "[author8 post's title]", "author8", "[author8 post's body]", 3),
-                new Post(7, "[author6 post's title]", "author6", "[author6 post's body]", 3),
-                new Post(8, "[author29 post's title]", "author29", "[author29 post's body]", 3),
-                new Post(9, "[author3 post's title]", "author3", "[author3 post's body]", 3),
-                new Post(10, "[author15 post's title]", "author15", "[author15 post's body]", 3),
-                new Post(11, "[author7 post's title]", "author7", "[author7 post's body]", 3),
-                new Post(12, "[author17 post's title]", "author17", "[author17 post's body]", 4),
-                new Post(13, "[author16 post's title]", "author16", "[author16 post's body]", 4),
-                new Post(14, "[author27 post's title]", "author27", "[author27 post's body]", 4),
-                new Post(20, "[author27 post's title]", "author27", "[author27 post's body]", 4),
-                new Post(15, "[author29 post's title]", "author29", "[author29 post's body]", 5),
-                new Post(16, "[author27 post's title]", "author27", "[author27 post's body]", 5),
-                new Post(17, "[author16 post's title]", "author16", "[author16 post's body]", 5),
-                new Post(18, "[author14 post's title]", "author14", "[author14 post's body]", 5),
-                new Post(19, "[author29 post's title]", "author29", "[author29 post's body]", 5)
+
             };
 
+
+            int[] numberOfPosts = new int[]{ 3, 2, 6, 4, 5 };
+            int idx = 1;
+            var posts = new List<Post>();
+            for (int i = 0; i < numberOfPosts.Length; i++)
+            {
+                for (int j = 0; j < numberOfPosts[i]; j++)
+                {
+                    posts.Add(new Post(idx++, $"[author{i + 1} post's title]", $"author{i + 1}", $"[author{i + 1} post's body]", i + 1));
+                }
+            }
+            
             var blogs = new List<Blog>()
             {
                 new Blog(1, "blog1", "https://boiler_plate1.blog"),
@@ -63,7 +55,7 @@ namespace BlogApp.Test
             {
                 blog.Posts = posts.Where(p => p.BlogId == blog.Id).ToList();
             }
-
+            
             bRepoMock = new Mock<IRepository<Blog>>();
             pRepoMock = new Mock<IRepository<Post>>();
             cRepoMock = new Mock<IRepository<Comment>>();
