@@ -41,27 +41,28 @@ namespace BlogApp.Test
                 new Post(12, "[author17 post's title]", "author17", "[author17 post's body]", 4),
                 new Post(13, "[author16 post's title]", "author16", "[author16 post's body]", 4),
                 new Post(14, "[author27 post's title]", "author27", "[author27 post's body]", 4),
+                new Post(20, "[author27 post's title]", "author27", "[author27 post's body]", 4),
                 new Post(15, "[author29 post's title]", "author29", "[author29 post's body]", 5),
                 new Post(16, "[author27 post's title]", "author27", "[author27 post's body]", 5),
                 new Post(17, "[author16 post's title]", "author16", "[author16 post's body]", 5),
                 new Post(18, "[author14 post's title]", "author14", "[author14 post's body]", 5),
-                new Post(19, "[author29 post's title]", "author29", "[author29 post's body]", 5),
-                new Post(20, "[author27 post's title]", "author27", "[author27 post's body]", 5)
+                new Post(19, "[author29 post's title]", "author29", "[author29 post's body]", 5)
             };
+
             var blogs = new List<Blog>()
             {
-                new Blog(1, "blog1", "https://boiler_plate1.blog")
-                {
-                    Posts = posts.GetRange(0, 3)
-                },
-                new Blog(2, "blog2", "https://boiler_plate2.blog")
-                {
-                    Posts = posts.GetRange(3, 2)
-                },
+                new Blog(1, "blog1", "https://boiler_plate1.blog"),
+                new Blog(2, "blog2", "https://boiler_plate2.blog"),
                 new Blog(3, "blog3", "https://boiler_plate3.blog"),
                 new Blog(4, "blog4", "https://boiler_plate4.blog"),
                 new Blog(5, "blog5", "https://boiler_plate5.blog")
             };
+
+            //Table connections
+            foreach (var blog in blogs)
+            {
+                blog.Posts = posts.Where(p => p.BlogId == blog.Id).ToList();
+            }
 
             bRepoMock = new Mock<IRepository<Blog>>();
             pRepoMock = new Mock<IRepository<Post>>();
@@ -74,13 +75,13 @@ namespace BlogApp.Test
             bl = new BlogLogic(bRepoMock.Object);
             pl = new PostLogic(pRepoMock.Object);
             cl = new CommentLogic(cRepoMock.Object);
-            ;
         }
 
         [Test]
         public void CreationTest()
         {
             BlogDbContext ctx = new BlogDbContext();
+            ;
         }
     }
 }
