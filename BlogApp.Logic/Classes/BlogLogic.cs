@@ -23,7 +23,7 @@ namespace BlogApp.Logic.Classes
         {
             if (item.URL.Length < 3)
             {
-                throw new ArgumentException("Short title");
+                throw new ArgumentException("Short URL");
             }
             repo.Create(item);
         }
@@ -38,7 +38,7 @@ namespace BlogApp.Logic.Classes
             var movie = repo.Read(id);
             if (movie == null)
             {
-                throw new ArgumentException("Non-existent movie");
+                throw new ArgumentException("Non-existent blog");
             }
             return movie;
         }
@@ -52,5 +52,7 @@ namespace BlogApp.Logic.Classes
         {
             repo.Update(item);
         }
+
+
     }
 }
