@@ -19,28 +19,41 @@ namespace BlogApp.Logic.Classes
             this.repo = repo;
         }
 
+        #region CRUD
+
         public void Create(Blog item)
         {
-            if (item.URL.Length < 3)
+            if (item.BlogName.Length < 5)
             {
-                throw new ArgumentException("Short URL");
+                throw new ArgumentException("Short blog name");
+            }
+
+            if (item.URL.Split(':')[0] != "https")
+            {
+                throw new ArgumentException("Insecure protocol");
+            }
+
+            if (item.Id < 0)
+            {
+                throw new ArgumentException("Invalid ID");
             }
             repo.Create(item);
         }
 
         public void Delete(int id)
         {
+            this.Read(id);
             repo.Delete(id);
         }
 
         public Blog Read(int id)
         {
-            var movie = repo.Read(id);
-            if (movie == null)
+            var blog = repo.Read(id);
+            if (blog == null)
             {
                 throw new ArgumentException("Non-existent blog");
             }
-            return movie;
+            return blog;
         }
 
         public IQueryable<Blog> ReadAll()
@@ -53,6 +66,12 @@ namespace BlogApp.Logic.Classes
             repo.Update(item);
         }
 
-
+        #endregion
+        #region Non-CRUD
+        public int? BlogPostsCount(int id)
+        {
+            return null;
+        }
+        #endregion
     }
 }
