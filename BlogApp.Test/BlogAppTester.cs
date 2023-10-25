@@ -94,7 +94,7 @@ namespace BlogApp.Test
         }
 
         [Test]
-        public void PostsInCategoryTest()
+        public void PostsCountInCategoriesTest()
         {
             var expected = new List<CategoryCountInfo>
             {
@@ -112,5 +112,26 @@ namespace BlogApp.Test
             var actual = bl.PostsCountInCategories();
             Assert.AreEqual(expected, actual);
         }
+
+        [Test]
+        public void GetAverageRatingOfPostsPerCategoryTest()
+        {
+            var expected = new List<CategoryRatingAvgInfo>
+            {
+                new CategoryRatingAvgInfo()
+                {
+                    CategoryName = "cat1",
+                    CategoryRatingAvg = 5.25
+                },
+                new CategoryRatingAvgInfo()
+                {
+                    CategoryName = "cat2",
+                    CategoryRatingAvg = 5
+                }
+            };
+            var actual = bl.GetAverageRatingOfPostsPerCategory();
+            Assert.AreEqual(expected, actual);
+        }
+
     }
 }

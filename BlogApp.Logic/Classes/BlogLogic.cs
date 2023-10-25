@@ -83,7 +83,53 @@ namespace BlogApp.Logic.Classes
                        CategoryCount = categories.Count()
                    };
         }
+
+        public IEnumerable<CategoryRatingAvgInfo> GetAverageRatingOfPostsPerCategory()
+        {
+            var blogs = repo.ReadAll().ToList();
+            List<Post> posts = new List<Post>();
+            blogs.ForEach(b => posts.AddRange(b.Posts));
+            var CategoryRatingAvgs = new List<CategoryRatingAvgInfo>();
+            foreach (var category in posts.GroupBy(p => p.Category))
+            {
+
+                List<Comment> comments = new List<Comment>();
+                foreach (var post in category)
+                {
+                    comments.AddRange(post.Comments);
+                }
+                double avg = comments.Average(c => c.PostRating);
+                CategoryRatingAvgs.Add(new CategoryRatingAvgInfo()
+                {
+                    CategoryName = category.Key,
+                    CategoryRatingAvg = avg
+                });
+            }
+            return CategoryRatingAvgs;
+        }
         #endregion
+    }
+
+    public class CategoryRatingAvgInfo
+    {
+        public CategoryRatingAvgInfo()
+        {
+        }
+
+        public string CategoryName { get; set; }
+        public double CategoryRatingAvg { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CategoryRatingAvgInfo info &&
+                   CategoryName == info.CategoryName &&
+                   CategoryRatingAvg == info.CategoryRatingAvg;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(CategoryName, CategoryRatingAvg);
+        }
     }
 
     public class CategoryCountInfo
@@ -106,4 +152,6 @@ namespace BlogApp.Logic.Classes
             return HashCode.Combine(CategoryName, CategoryCount);
         }
     }
+
+
 }
