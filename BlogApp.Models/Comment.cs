@@ -5,6 +5,10 @@ namespace BlogApp.Models
 {
     public class Comment
     {
+        public Comment()
+        {
+        }
+
         public Comment(int id, string userName, string commentBody, int postId)
         {
             Id = id;
@@ -22,8 +26,12 @@ namespace BlogApp.Models
         [Required]
         [StringLength(240)]
         public string CommentBody { get; set; }
+
         [ForeignKey(nameof(Post))]
         public int PostId { get; set; }
+        [Required]
+        [Range(1, 10)]
+        public int PostRating { get; set; }
         [NotMapped]
         public virtual Post Post { get; set; }
     }

@@ -37,6 +37,9 @@ namespace BlogApp.Models
         [Required]
         [StringLength(240)]
         public string PostBody { get; set; }
+        [Required]
+        [StringLength(240)]
+        public string Category { get; set; }
 
 
         [ForeignKey(nameof(Blog))]
