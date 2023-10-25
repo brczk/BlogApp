@@ -24,38 +24,62 @@ namespace BlogApp.Test
         [SetUp]
         public void Init()
         {
-            var comments = new List<Comment>()
-            {
-
-            };
-
-
-            int[] numberOfPosts = new int[]{ 3, 2, 6, 4, 5 };
-            int idx = 1;
-            var posts = new List<Post>();
-            for (int i = 0; i < numberOfPosts.Length; i++)
-            {
-                for (int j = 0; j < numberOfPosts[i]; j++)
-                {
-                    posts.Add(new Post(idx++, $"[author{i + 1} post's title]", $"author{i + 1}", $"[author{i + 1} post's body]", i + 1));
-                }
-            }
-            
             var blogs = new List<Blog>()
             {
                 new Blog(1, "blog1", "https://boiler_plate1.blog"),
-                new Blog(2, "blog2", "https://boiler_plate2.blog"),
-                new Blog(3, "blog3", "https://boiler_plate3.blog"),
-                new Blog(4, "blog4", "https://boiler_plate4.blog"),
-                new Blog(5, "blog5", "https://boiler_plate5.blog")
+                new Blog(2, "blog2", "https://boiler_plate2.blog")
             };
+
+            int[] numberOfPostsPerBlog = new int[] { 3, 2};
+            int idx = 1;
+            var posts = new List<Post>();
+            string[] categories = new string[] { "cat1", "cat2"};
+            for (int i = 0; i < numberOfPostsPerBlog.Length; i++)
+            {
+                for (int j = 0; j < numberOfPostsPerBlog[i]; j++)
+                {
+                    posts.Add(new Post()
+                    {
+                        Id = idx++,
+                        PostTitle = $"[author{idx - 1} post's title]",
+                        PostAuthor = $"author{idx - 1}",
+                        PostBody = $"[author{idx - 1} post's body]",
+                        BlogId = i + 1,
+                        Category = categories[idx % categories.Length]
+                    }
+                    );
+                }
+            }
+
+            int[] numberOfCommentsPerPost = new int[] { 4, 2, 3 , 2, 1};
+            idx = 1;
+            var comments = new List<Comment>();
+            for (int i = 0; i < numberOfCommentsPerPost.Length; i++)
+            {
+                for (int j = 0; j < numberOfCommentsPerPost[i]; j++)
+                {
+                    comments.Add(new Comment() 
+                    { 
+                        Id = idx++, 
+                        UserName = $"user{idx - 1}", 
+                        CommentBody = $"[user{idx - 1} comment's about author{i + 1} post's]", 
+                        PostId = i + 1, 
+                        PostRating = idx % 10 + 1
+                    }
+                    );
+                }
+            }
 
             //Table connections
             foreach (var blog in blogs)
             {
                 blog.Posts = posts.Where(p => p.BlogId == blog.Id).ToList();
             }
-            
+            foreach (var post in posts)
+            {
+                post.Comments = comments.Where(c => c.PostId == post.Id).ToList();
+            }
+
             bRepoMock = new Mock<IRepository<Blog>>();
             pRepoMock = new Mock<IRepository<Post>>();
             cRepoMock = new Mock<IRepository<Comment>>();
@@ -70,10 +94,23 @@ namespace BlogApp.Test
         }
 
         [Test]
-        public void CreationTest()
+        public void PostsInCategoryTest()
         {
-            BlogDbContext ctx = new BlogDbContext();
-            ;
+            var expected = new List<CategoryCountInfo>
+            {
+                new CategoryCountInfo()
+                {
+                    CategoryName = "cat1",
+                    CategoryCount = 3
+                },
+                new CategoryCountInfo()
+                {
+                    CategoryName = "cat2",
+                    CategoryCount = 2
+                }
+            };
+            var actual = bl.PostsCountInCategories();
+            Assert.AreEqual(expected, actual);
         }
     }
 }

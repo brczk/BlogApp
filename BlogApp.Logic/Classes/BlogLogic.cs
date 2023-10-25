@@ -3,6 +3,7 @@ using BlogApp.Models;
 using BlogApp.Repository.GenericRepository;
 using BlogApp.Repository.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,10 +69,41 @@ namespace BlogApp.Logic.Classes
 
         #endregion
         #region Non-CRUD
-        public int? BlogPostsCount(int id)
+        public IEnumerable<CategoryCountInfo> PostsCountInCategories()
         {
-            return null;
+            var blogs = repo.ReadAll().ToList();
+            List<Post> posts = new List<Post>();
+            blogs.ForEach(b => posts.AddRange(b.Posts));
+ 
+            return from post in posts
+                   group post by post.Category into categories
+                   select new CategoryCountInfo()
+                   {
+                       CategoryName = categories.Key,
+                       CategoryCount = categories.Count()
+                   };
         }
         #endregion
+    }
+
+    public class CategoryCountInfo
+    {
+        public string CategoryName { get; set; }
+        public int CategoryCount {  get; set; }
+        public CategoryCountInfo()
+        {
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CategoryCountInfo info &&
+                   CategoryName == info.CategoryName &&
+                   CategoryCount == info.CategoryCount;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(CategoryName, CategoryCount);
+        }
     }
 }
