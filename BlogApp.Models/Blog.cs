@@ -12,11 +12,10 @@ namespace BlogApp.Models
             Posts = new HashSet<Post>();
         }
 
-        public Blog(int id, string blogName, string url)
+        public Blog(int id, string blogName)
         {
             Id = id;
             BlogName = blogName;
-            URL = url;
             Posts = new HashSet<Post>();
         }
 
@@ -26,9 +25,6 @@ namespace BlogApp.Models
         [Required]
         [StringLength(240)]
         public string BlogName { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string URL { get; set;}
         [NotMapped]
         public virtual ICollection<Post> Posts { get; set; }
     }

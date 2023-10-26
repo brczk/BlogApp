@@ -29,11 +29,6 @@ namespace BlogApp.Logic.Classes
                 throw new ArgumentException("Short blog name");
             }
 
-            if (item.URL.Split(':')[0] != "https")
-            {
-                throw new ArgumentException("Insecure protocol");
-            }
-
             if (item.Id < 0)
             {
                 throw new ArgumentException("Invalid ID");

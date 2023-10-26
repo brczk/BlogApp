@@ -43,16 +43,16 @@ namespace BlogApp.Repository.Database
 
             List<Blog> blogs = new List<Blog>()
             {
-                new Blog() { Id = 1, BlogName = "blog1", URL = "https://boilerp1.blog"},
-                new Blog() { Id = 2, BlogName = "blog2", URL = "https://boilerp2.blog"},
-                new Blog() { Id = 3, BlogName = "blog3", URL = "https://boilerp3.blog"},
-                new Blog() { Id = 4, BlogName = "blog4", URL = "https://boilerp4.blog"},
-                new Blog() { Id = 5, BlogName = "blog5", URL = "https://boilerp5.blog"},
-                new Blog() { Id = 6, BlogName = "blog6", URL = "https://boilerp6.blog"},
-                new Blog() { Id = 7, BlogName = "blog7", URL = "https://boilerp7.blog"},
-                new Blog() { Id = 8, BlogName = "blog8", URL = "https://boilerp8.blog"},
-                new Blog() { Id = 9, BlogName = "blog9", URL = "https://boilerp9.blog"},
-                new Blog() { Id = 10, BlogName = "blog10", URL = "https://boilerp10.blog"}
+                new Blog() { Id = 1, BlogName = "blog1"},
+                new Blog() { Id = 2, BlogName = "blog2"},
+                new Blog() { Id = 3, BlogName = "blog3"},
+                new Blog() { Id = 4, BlogName = "blog4"},
+                new Blog() { Id = 5, BlogName = "blog5"},
+                new Blog() { Id = 6, BlogName = "blog6"},
+                new Blog() { Id = 7, BlogName = "blog7"},
+                new Blog() { Id = 8, BlogName = "blog8"},
+                new Blog() { Id = 9, BlogName = "blog9"},
+                new Blog() { Id = 10, BlogName = "blog10"}
             };
 
             List<Post> posts = new List<Post>()

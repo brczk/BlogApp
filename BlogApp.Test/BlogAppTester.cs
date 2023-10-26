@@ -26,8 +26,8 @@ namespace BlogApp.Test
         {
             var blogs = new List<Blog>()
             {
-                new Blog(1, "blog1", "https://boiler_plate1.blog"),
-                new Blog(2, "blog2", "https://boiler_plate2.blog")
+                new Blog(1, "blog1"),
+                new Blog(2, "blog2")
             };
 
             int[] numberOfPostsPerBlog = new int[] { 3, 2};
