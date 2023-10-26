@@ -41,9 +41,8 @@ namespace BlogApp.Test
                     posts.Add(new Post()
                     {
                         Id = idx++,
-                        PostTitle = $"[author{idx - 1} post's title]",
+                        Content = $"[author{idx - 1} post's]",
                         PostAuthor = $"author{idx - 1}",
-                        PostBody = $"[author{idx - 1} post's body]",
                         BlogId = i + 1,
                         Category = categories[idx % categories.Length]
                     }
@@ -62,7 +61,7 @@ namespace BlogApp.Test
                     { 
                         Id = idx++, 
                         UserName = $"user{idx - 1}", 
-                        CommentBody = $"[user{idx - 1} comment's about author{i + 1} post's]", 
+                        Content = $"[user{idx - 1} comment's about author{i + 1} post's]", 
                         PostId = i + 1, 
                         PostRating = idx % 10 + 1
                     }
@@ -161,13 +160,13 @@ namespace BlogApp.Test
                 new MostPopularPostInfo()
                 {
                     BlogName = "blog1",
-                    MostPopularPostTitle = "[author1 post's title]",
+                    MostPopularPostContent = "[author1 post's]",
                     NumberOfComments = 4
                 },
                 new MostPopularPostInfo()
                 {
                     BlogName = "blog2",
-                    MostPopularPostTitle = "[author4 post's title]",
+                    MostPopularPostContent = "[author4 post's]",
                     NumberOfComments = 2
                 }
             };

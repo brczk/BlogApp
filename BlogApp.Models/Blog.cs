@@ -19,13 +19,19 @@ namespace BlogApp.Models
             Posts = new HashSet<Post>();
         }
 
+        #region Database
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        #endregion
+
+        #region Navigation
+        [NotMapped]
+        public virtual ICollection<Post> Posts { get; set; }
+        #endregion
+
         [Required]
         [StringLength(240)]
         public string BlogName { get; set; }
-        [NotMapped]
-        public virtual ICollection<Post> Posts { get; set; }
     }
 }

@@ -94,7 +94,7 @@ namespace BlogApp.Logic.Classes
                 MostPopularPosts.Add(new MostPopularPostInfo()
                 {
                     BlogName = blog.BlogName,
-                    MostPopularPostTitle = MostPopularPost.PostTitle,
+                    MostPopularPostContent = MostPopularPost.Content,
                     NumberOfComments = MostPopularPost.Comments.Count
                 });
             }
@@ -186,20 +186,20 @@ namespace BlogApp.Logic.Classes
     public class MostPopularPostInfo
     {
         public string BlogName { get; set; }
-        public string MostPopularPostTitle { get; set; }
+        public string MostPopularPostContent { get; set; }
         public int NumberOfComments { get; set; }
 
         public override bool Equals(object obj)
         {
             return obj is MostPopularPostInfo info &&
                    BlogName == info.BlogName &&
-                   MostPopularPostTitle == info.MostPopularPostTitle &&
+                   MostPopularPostContent == info.MostPopularPostContent &&
                    NumberOfComments == info.NumberOfComments;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(BlogName, MostPopularPostTitle, NumberOfComments);
+            return HashCode.Combine(BlogName, MostPopularPostContent, NumberOfComments);
         }
     }
 
