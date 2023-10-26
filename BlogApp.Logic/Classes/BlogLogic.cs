@@ -69,7 +69,44 @@ namespace BlogApp.Logic.Classes
 
         #endregion
         #region Non-CRUD
-        public IEnumerable<CategoryPostCountInfo> PostsCountPerCategory()
+        public IEnumerable<BlogRankingInfo> GetBlogRankingsByPopularity()
+        {
+            var blogs = repo.ReadAll();
+            var ranking = new List<BlogRankingInfo>();
+            foreach (var blog in blogs)
+            {
+                int TotalNumberOfComments = 0;
+                foreach (var post in blog.Posts)
+                {
+                    TotalNumberOfComments += post.Comments.Count;
+                }
+                ranking.Add(new BlogRankingInfo()
+                {
+                    BlogName = blog.BlogName,
+                    TotalNumberOfComments = TotalNumberOfComments
+                });
+            }
+            return ranking.OrderByDescending(x => x.TotalNumberOfComments);
+        }
+
+        public IEnumerable<MostPopularPostInfo> GetMostPopularPostPerBlog()
+        {
+            var blogs = repo.ReadAll().ToList();
+            var MostPopularPosts = new List<MostPopularPostInfo>();
+            foreach (var blog in blogs)
+            {
+                var MostPopularPost = blog.Posts.OrderByDescending(p => p.Comments.Count).FirstOrDefault();
+                MostPopularPosts.Add(new MostPopularPostInfo()
+                {
+                    BlogName = blog.BlogName,
+                    MostPopularPostTitle = MostPopularPost.PostTitle,
+                    NumberOfComments = MostPopularPost.Comments.Count
+                });
+            }
+            return MostPopularPosts;
+        }
+
+        public IEnumerable<CategoryPostCountInfo> GetPostsCountPerCategory()
         {
             var blogs = repo.ReadAll().ToList();
             List<Post> posts = new List<Post>();
@@ -113,31 +150,62 @@ namespace BlogApp.Logic.Classes
             var AverageNumberOfCommentsPerPost = new List<AvgNumberOfCommentsInfo>();
             foreach (var blog in blogs)
             {
-                if (blog.Posts.Count == 0)
+                double TotalNumberOfComments = 0;
+                foreach (var post in blog.Posts)
                 {
-                    AverageNumberOfCommentsPerPost.Add(new AvgNumberOfCommentsInfo()
-                    {
-                        BlogName = blog.BlogName,
-                        AvgNumberOfComments = 0
-                    });
+                    TotalNumberOfComments += post.Comments.Count;
                 }
-                else
+                AverageNumberOfCommentsPerPost.Add(new AvgNumberOfCommentsInfo()
                 {
-                    double TotalNumberOfComments = 0;
-                    foreach (var post in blog.Posts)
-                    {
-                        TotalNumberOfComments += post.Comments.Count;
-                    }
-                    AverageNumberOfCommentsPerPost.Add(new AvgNumberOfCommentsInfo()
-                    {
-                        BlogName = blog.BlogName,
-                        AvgNumberOfComments = TotalNumberOfComments / blog.Posts.Count
-                    });
-                }
+                    BlogName = blog.BlogName,
+                    AvgNumberOfComments = TotalNumberOfComments / (blog.Posts.Count == 0 ? 1 : blog.Posts.Count)
+                });
             }
             return AverageNumberOfCommentsPerPost;
         }
         #endregion
+    }
+
+    public class BlogRankingInfo
+    {
+        public BlogRankingInfo()
+        {
+        }
+
+        public string BlogName { get; set; }
+        public int TotalNumberOfComments { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is BlogRankingInfo info &&
+                   BlogName == info.BlogName &&
+                   TotalNumberOfComments == info.TotalNumberOfComments;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(BlogName, TotalNumberOfComments);
+        }
+    }
+
+    public class MostPopularPostInfo
+    {
+        public string BlogName { get; set; }
+        public string MostPopularPostTitle { get; set; }
+        public int NumberOfComments { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is MostPopularPostInfo info &&
+                   BlogName == info.BlogName &&
+                   MostPopularPostTitle == info.MostPopularPostTitle &&
+                   NumberOfComments == info.NumberOfComments;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(BlogName, MostPopularPostTitle, NumberOfComments);
+        }
     }
 
     public class AvgNumberOfCommentsInfo

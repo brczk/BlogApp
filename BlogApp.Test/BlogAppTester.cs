@@ -94,7 +94,7 @@ namespace BlogApp.Test
         }
 
         [Test]
-        public void PostsCountPerCategoryTest()
+        public void GetPostsCountPerCategoryTest()
         {
             var expected = new List<CategoryPostCountInfo>
             {
@@ -109,7 +109,7 @@ namespace BlogApp.Test
                     CategoryCount = 2
                 }
             };
-            var actual = bl.PostsCountPerCategory();
+            var actual = bl.GetPostsCountPerCategory();
             Assert.AreEqual(expected, actual);
         }
 
@@ -153,5 +153,46 @@ namespace BlogApp.Test
             Assert.AreEqual(expected, actual);
         }
 
+        [Test]
+        public void GetMostPopularPostPerBlogTest()
+        {
+            var expected = new List<MostPopularPostInfo>
+            {
+                new MostPopularPostInfo()
+                {
+                    BlogName = "blog1",
+                    MostPopularPostTitle = "[author1 post's title]",
+                    NumberOfComments = 4
+                },
+                new MostPopularPostInfo()
+                {
+                    BlogName = "blog2",
+                    MostPopularPostTitle = "[author4 post's title]",
+                    NumberOfComments = 2
+                }
+            };
+            var actual = bl.GetMostPopularPostPerBlog();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetBlogRankingsByPopularityTest()
+        {
+            var expected = new List<BlogRankingInfo>()
+            {
+                new BlogRankingInfo()
+                {
+                    BlogName = "blog1",
+                    TotalNumberOfComments = 9
+                },
+                new BlogRankingInfo()
+                {
+                    BlogName = "blog2",
+                    TotalNumberOfComments = 3
+                }
+            };
+            var actual = bl.GetBlogRankingsByPopularity();
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
