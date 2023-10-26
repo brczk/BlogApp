@@ -69,7 +69,7 @@ namespace BlogApp.Logic.Classes
 
         #endregion
         #region Non-CRUD
-        public IEnumerable<CategoryCountInfo> PostsCountInCategories()
+        public IEnumerable<CategoryPostCountInfo> PostsCountPerCategory()
         {
             var blogs = repo.ReadAll().ToList();
             List<Post> posts = new List<Post>();
@@ -77,72 +77,123 @@ namespace BlogApp.Logic.Classes
  
             return from post in posts
                    group post by post.Category into categories
-                   select new CategoryCountInfo()
+                   select new CategoryPostCountInfo()
                    {
                        CategoryName = categories.Key,
                        CategoryCount = categories.Count()
                    };
         }
 
-        public IEnumerable<CategoryRatingAvgInfo> GetAverageRatingOfPostsPerCategory()
+        public IEnumerable<CategoryAvgPostRatingInfo> GetAverageRatingOfPostsPerCategory()
         {
             var blogs = repo.ReadAll().ToList();
             List<Post> posts = new List<Post>();
             blogs.ForEach(b => posts.AddRange(b.Posts));
-            var CategoryRatingAvgs = new List<CategoryRatingAvgInfo>();
+            var CategoryPostRatingAvgs = new List<CategoryAvgPostRatingInfo>();
             foreach (var category in posts.GroupBy(p => p.Category))
             {
-
                 List<Comment> comments = new List<Comment>();
                 foreach (var post in category)
                 {
                     comments.AddRange(post.Comments);
                 }
                 double avg = comments.Average(c => c.PostRating);
-                CategoryRatingAvgs.Add(new CategoryRatingAvgInfo()
+                CategoryPostRatingAvgs.Add(new CategoryAvgPostRatingInfo()
                 {
                     CategoryName = category.Key,
-                    CategoryRatingAvg = avg
+                    CategoryAvgPostRating = avg
                 });
             }
-            return CategoryRatingAvgs;
+            return CategoryPostRatingAvgs;
+        }
+        
+        public IEnumerable<AvgNumberOfCommentsInfo> GetAverageNumberOfCommentsPerPost()
+        {
+            var blogs = repo.ReadAll().ToList();
+            var AverageNumberOfCommentsPerPost = new List<AvgNumberOfCommentsInfo>();
+            foreach (var blog in blogs)
+            {
+                if (blog.Posts.Count == 0)
+                {
+                    AverageNumberOfCommentsPerPost.Add(new AvgNumberOfCommentsInfo()
+                    {
+                        BlogName = blog.BlogName,
+                        AvgNumberOfComments = 0
+                    });
+                }
+                else
+                {
+                    double TotalNumberOfComments = 0;
+                    foreach (var post in blog.Posts)
+                    {
+                        TotalNumberOfComments += post.Comments.Count;
+                    }
+                    AverageNumberOfCommentsPerPost.Add(new AvgNumberOfCommentsInfo()
+                    {
+                        BlogName = blog.BlogName,
+                        AvgNumberOfComments = TotalNumberOfComments / blog.Posts.Count
+                    });
+                }
+            }
+            return AverageNumberOfCommentsPerPost;
         }
         #endregion
     }
 
-    public class CategoryRatingAvgInfo
+    public class AvgNumberOfCommentsInfo
     {
-        public CategoryRatingAvgInfo()
+        public string BlogName;
+        public double AvgNumberOfComments;
+        public AvgNumberOfCommentsInfo()
         {
         }
 
-        public string CategoryName { get; set; }
-        public double CategoryRatingAvg { get; set; }
-
         public override bool Equals(object obj)
         {
-            return obj is CategoryRatingAvgInfo info &&
-                   CategoryName == info.CategoryName &&
-                   CategoryRatingAvg == info.CategoryRatingAvg;
+            return obj is AvgNumberOfCommentsInfo info &&
+                   BlogName == info.BlogName &&
+                   AvgNumberOfComments == info.AvgNumberOfComments;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(CategoryName, CategoryRatingAvg);
+            return HashCode.Combine(BlogName, AvgNumberOfComments);
         }
     }
 
-    public class CategoryCountInfo
+    public class CategoryAvgPostRatingInfo
+    {
+        public CategoryAvgPostRatingInfo()
+        {
+        }
+
+        public string CategoryName { get; set; }
+        public double CategoryAvgPostRating { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CategoryAvgPostRatingInfo info &&
+                   CategoryName == info.CategoryName &&
+                   CategoryAvgPostRating == info.CategoryAvgPostRating;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(CategoryName, CategoryAvgPostRating);
+        }
+    }
+
+    public class CategoryPostCountInfo
     {
         public string CategoryName { get; set; }
         public int CategoryCount {  get; set; }
-        public CategoryCountInfo()
+        public CategoryPostCountInfo()
         {
         }
 
         public override bool Equals(object obj)
         {
-            return obj is CategoryCountInfo info &&
+            return obj is CategoryPostCountInfo info &&
                    CategoryName == info.CategoryName &&
                    CategoryCount == info.CategoryCount;
         }

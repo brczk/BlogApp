@@ -94,42 +94,62 @@ namespace BlogApp.Test
         }
 
         [Test]
-        public void PostsCountInCategoriesTest()
+        public void PostsCountPerCategoryTest()
         {
-            var expected = new List<CategoryCountInfo>
+            var expected = new List<CategoryPostCountInfo>
             {
-                new CategoryCountInfo()
+                new CategoryPostCountInfo()
                 {
                     CategoryName = "cat1",
                     CategoryCount = 3
                 },
-                new CategoryCountInfo()
+                new CategoryPostCountInfo()
                 {
                     CategoryName = "cat2",
                     CategoryCount = 2
                 }
             };
-            var actual = bl.PostsCountInCategories();
+            var actual = bl.PostsCountPerCategory();
             Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void GetAverageRatingOfPostsPerCategoryTest()
         {
-            var expected = new List<CategoryRatingAvgInfo>
+            var expected = new List<CategoryAvgPostRatingInfo>
             {
-                new CategoryRatingAvgInfo()
+                new CategoryAvgPostRatingInfo()
                 {
                     CategoryName = "cat1",
-                    CategoryRatingAvg = 5.25
+                    CategoryAvgPostRating = 5.25
                 },
-                new CategoryRatingAvgInfo()
+                new CategoryAvgPostRatingInfo()
                 {
                     CategoryName = "cat2",
-                    CategoryRatingAvg = 5
+                    CategoryAvgPostRating = 5
                 }
             };
             var actual = bl.GetAverageRatingOfPostsPerCategory();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void GetAverageNumberOfCommentsPerPostTest()
+        {
+            var expected = new List<AvgNumberOfCommentsInfo>
+            {
+                new AvgNumberOfCommentsInfo()
+                {
+                    BlogName = "blog1",
+                    AvgNumberOfComments = 3
+                },
+                new AvgNumberOfCommentsInfo()
+                {
+                    BlogName = "blog2",
+                    AvgNumberOfComments = 1.5
+                }
+            };
+            var actual = bl.GetAverageNumberOfCommentsPerPost();
             Assert.AreEqual(expected, actual);
         }
 
