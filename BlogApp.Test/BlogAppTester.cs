@@ -24,6 +24,7 @@ namespace BlogApp.Test
         [SetUp]
         public void Init()
         {
+            #region Fake DbSet
             var blogs = new List<Blog>()
             {
                 new Blog(1, "blog1"),
@@ -54,12 +55,14 @@ namespace BlogApp.Test
                 new Comment(){ Id = 11, UserName = "user11", Content = "[user11 comment's about author4 post's]", PostId = 4, PostRating = 3},
                 new Comment(){ Id = 12, UserName = "user12", Content = "[user12 comment's about author5 post's]", PostId = 5, PostRating = 4}
             };
+            #endregion
 
             //Table connections
             foreach (var blog in blogs)
             {
                 blog.Posts = posts.Where(p => p.BlogId == blog.Id).ToList();
             }
+
             foreach (var post in posts)
             {
                 post.Comments = comments.Where(c => c.PostId == post.Id).ToList();
@@ -78,6 +81,7 @@ namespace BlogApp.Test
             cl = new CommentLogic(cRepoMock.Object);
         }
 
+        #region Non-crud
         [Test]
         public void GetPostsCountPerCategoryTest()
         {
@@ -179,5 +183,6 @@ namespace BlogApp.Test
             var actual = bl.GetBlogRankingsByPopularity();
             Assert.AreEqual(expected, actual);
         }
+        #endregion
     }
 }

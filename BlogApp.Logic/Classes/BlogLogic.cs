@@ -161,6 +161,7 @@ namespace BlogApp.Logic.Classes
         #endregion
     }
 
+    #region Non-crud helper classes
     public class BlogRankingInfo
     {
         public BlogRankingInfo()
@@ -266,6 +267,5 @@ namespace BlogApp.Logic.Classes
             return HashCode.Combine(CategoryName, CategoryCount);
         }
     }
-
-
+    #endregion
 }
