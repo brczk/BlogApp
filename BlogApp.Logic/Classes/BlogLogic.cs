@@ -38,7 +38,6 @@ namespace BlogApp.Logic.Classes
 
         public void Delete(int id)
         {
-            this.Read(id);
             repo.Delete(id);
         }
 

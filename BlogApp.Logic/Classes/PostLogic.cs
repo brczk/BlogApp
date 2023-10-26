@@ -21,6 +21,15 @@ namespace BlogApp.Logic.Classes
 
         public void Create(Post item)
         {
+            if(item.Content.Length < 5)
+            {
+                throw new ArgumentException("Too short content");
+            }
+
+            if (item.Id < 0)
+            {
+                throw new ArgumentException("Invalid ID");
+            }
             repo.Create(item);
         }
 
@@ -31,7 +40,12 @@ namespace BlogApp.Logic.Classes
 
         public Post Read(int id)
         {
-            return repo.Read(id);
+            var post = repo.Read(id);
+            if (post == null)
+            {
+                throw new ArgumentException("Non-existent post");
+            }
+            return post;
         }
 
         public IQueryable<Post> ReadAll()
