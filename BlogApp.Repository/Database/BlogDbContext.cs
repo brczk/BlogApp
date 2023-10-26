@@ -118,6 +118,7 @@ namespace BlogApp.Repository.Database
                 new Post(){ Id = 59, PostAuthor = "author12", Content = "[author12 post's]", BlogId = 1, Category = "Parenting"},
                 new Post(){ Id = 60, PostAuthor = "author16", Content = "[author16 post's]", BlogId = 2, Category = "Entertainment"}
             };
+
             List<Comment> comments = new List<Comment>()
             {
                 new Comment(){ Id = 1, UserName = "user553", Content = "[user553 comment's about author18 post's]", PostId = 1, PostRating = 1},

@@ -30,44 +30,30 @@ namespace BlogApp.Test
                 new Blog(2, "blog2")
             };
 
-            int[] numberOfPostsPerBlog = new int[] { 3, 2};
-            int idx = 1;
-            var posts = new List<Post>();
-            string[] categories = new string[] { "cat1", "cat2"};
-            for (int i = 0; i < numberOfPostsPerBlog.Length; i++)
+            var posts = new List<Post>()
             {
-                for (int j = 0; j < numberOfPostsPerBlog[i]; j++)
-                {
-                    posts.Add(new Post()
-                    {
-                        Id = idx++,
-                        Content = $"[author{idx - 1} post's]",
-                        PostAuthor = $"author{idx - 1}",
-                        BlogId = i + 1,
-                        Category = categories[idx % categories.Length]
-                    }
-                    );
-                }
-            }
+                new Post(){ Id = 1, PostAuthor = "author1", Content = "[author1 post's]", BlogId = 1, Category = "cat1"},
+                new Post(){ Id = 2, PostAuthor = "author2", Content = "[author2 post's]", BlogId = 1, Category = "cat2"},
+                new Post(){ Id = 3, PostAuthor = "author3", Content = "[author3 post's]", BlogId = 1, Category = "cat1"},
+                new Post(){ Id = 4, PostAuthor = "author4", Content = "[author4 post's]", BlogId = 2, Category = "cat2"},
+                new Post(){ Id = 5, PostAuthor = "author5", Content = "[author5 post's]", BlogId = 2, Category = "cat1"}
+            };
 
-            int[] numberOfCommentsPerPost = new int[] { 4, 2, 3 , 2, 1};
-            idx = 1;
-            var comments = new List<Comment>();
-            for (int i = 0; i < numberOfCommentsPerPost.Length; i++)
+            var comments = new List<Comment>()
             {
-                for (int j = 0; j < numberOfCommentsPerPost[i]; j++)
-                {
-                    comments.Add(new Comment() 
-                    { 
-                        Id = idx++, 
-                        UserName = $"user{idx - 1}", 
-                        Content = $"[user{idx - 1} comment's about author{i + 1} post's]", 
-                        PostId = i + 1, 
-                        PostRating = idx % 10 + 1
-                    }
-                    );
-                }
-            }
+                new Comment(){ Id = 1, UserName = "user1", Content = "[user1 comment's about author1 post's]", PostId = 1, PostRating = 3},
+                new Comment(){ Id = 2, UserName = "user2", Content = "[user2 comment's about author1 post's]", PostId = 1, PostRating = 4},
+                new Comment(){ Id = 3, UserName = "user3", Content = "[user3 comment's about author1 post's]", PostId = 1, PostRating = 5},
+                new Comment(){ Id = 4, UserName = "user4", Content = "[user4 comment's about author1 post's]", PostId = 1, PostRating = 6},
+                new Comment(){ Id = 5, UserName = "user5", Content = "[user5 comment's about author2 post's]", PostId = 2, PostRating = 7},
+                new Comment(){ Id = 6, UserName = "user6", Content = "[user6 comment's about author2 post's]", PostId = 2, PostRating = 8},
+                new Comment(){ Id = 7, UserName = "user7", Content = "[user7 comment's about author3 post's]", PostId = 3, PostRating = 9},
+                new Comment(){ Id = 8, UserName = "user8", Content = "[user8 comment's about author3 post's]", PostId = 3, PostRating = 10},
+                new Comment(){ Id = 9, UserName = "user9", Content = "[user9 comment's about author3 post's]", PostId = 3, PostRating = 1},
+                new Comment(){ Id = 10, UserName = "user10", Content = "[user10 comment's about author4 post's]", PostId = 4, PostRating = 2},
+                new Comment(){ Id = 11, UserName = "user11", Content = "[user11 comment's about author4 post's]", PostId = 4, PostRating = 3},
+                new Comment(){ Id = 12, UserName = "user12", Content = "[user12 comment's about author5 post's]", PostId = 5, PostRating = 4}
+            };
 
             //Table connections
             foreach (var blog in blogs)
