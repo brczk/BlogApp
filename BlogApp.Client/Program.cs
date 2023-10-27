@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace BlogApp.Client
@@ -12,6 +13,7 @@ namespace BlogApp.Client
     {
         static RestService rest;
         delegate object GetPropValue(string propName);
+        delegate void CUD(GetPropValue method);
 
         static void Create<T>(GetPropValue method)
         {
@@ -19,7 +21,7 @@ namespace BlogApp.Client
             object instance = Activator.CreateInstance(t);
             foreach (var prop in t.GetProperties())
             {
-                if(prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
                 {
                     object propValue = method(prop.Name);
                     Type propType = prop.PropertyType;
@@ -49,14 +51,44 @@ namespace BlogApp.Client
             Console.ReadLine();
         }
 
+        static void ReadAll<T>(string stat)
+        {
+            Console.Clear();
+            List<T> items = rest.Get<T>($"Stats/{stat}");
+            foreach (var item in items)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadLine();
+        }
+
+        static void CUDWrapper(CUD action, GetPropValue method)
+        {
+            try
+            {
+                action(method);
+            }
+            catch (Exception ex) when (ex is TargetInvocationException || ex is FormatException)
+            {
+                Console.WriteLine("Parse error.");
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Console.ReadLine();
+            }
+        }
 
         static void Update<T>(GetPropValue method)
         {
+            Type t = typeof(T);
+            Console.Clear();
             Console.Write("ID: ");
             int id = int.Parse(Console.ReadLine());
-            Type t = typeof(T);
             T item = rest.Get<T>(id, t.Name);
-            
             foreach (var prop in t.GetProperties())
             {
                 if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
@@ -76,19 +108,18 @@ namespace BlogApp.Client
                     }
                 }
             }
-
             rest.Put(item, t.Name);
         }
 
-        static void Delete<T>()
+        static void Delete<T>(GetPropValue method)
         {
-            Console.Write("ID: ");
-            int id = int.Parse(Console.ReadLine());
-            rest.Delete(id, typeof(T).Name);
+            string id = method("ID").ToString();
+            rest.Delete(int.Parse(id), typeof(T).Name);
         }
 
         static string ReadProp(string propName)
         {
+            Console.Clear();
             Console.Write($"{propName}: ");
             string value = Console.ReadLine();
             return value;
@@ -100,24 +131,32 @@ namespace BlogApp.Client
             rest = new RestService("http://localhost:5828/", "blog");
 
             var blogSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => Create<Blog>( ReadProp))
+                .Add("Create", () => CUDWrapper(Create<Blog>,ReadProp))
                 .Add("ReadAll", () => ReadAll<Blog>())
-                .Add("Update", () => Update<Blog>(ReadProp))
-                .Add("Delete", () => Delete<Blog>())
+                .Add("Update", () => CUDWrapper(Update<Blog>, ReadProp))
+                .Add("Delete", () => CUDWrapper(Delete<Blog>, ReadProp))
                 .Add("Exit", ConsoleMenu.Close);
 
             var postSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => Create<Post>(ReadProp))
+                .Add("Create", () => CUDWrapper(Create<Post>, ReadProp))
                 .Add("ReadAll", () => ReadAll<Post>())
-                .Add("Update", () => Update<Post>(ReadProp))
-                .Add("Delete", () => Delete<Blog>())
+                .Add("Update", () => CUDWrapper(Update<Post>, ReadProp))
+                .Add("Delete", () => CUDWrapper(Delete<Post>, ReadProp))
                 .Add("Exit", ConsoleMenu.Close);
 
             var commentSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => Create<Comment>(ReadProp))
+                .Add("Create", () => CUDWrapper(Create<Comment>, ReadProp))
                 .Add("ReadAll", () => ReadAll<Comment>())
-                .Add("Update", () => Update<Comment>(ReadProp))
-                .Add("Delete", () => Delete<Blog>())
+                .Add("Update", () => CUDWrapper(Update<Comment>, ReadProp))
+                .Add("Delete", () => CUDWrapper(Delete<Comment>, ReadProp))
+                .Add("Exit", ConsoleMenu.Close);
+
+            var statSubMenu = new ConsoleMenu(args, level: 1)
+                .Add("GetAvgNumberOfComments", () => ReadAll<dynamic>("GetAvgNumberOfComments"))
+                .Add("GetBlogRankingsByPopularity", () => ReadAll<dynamic>("GetBlogRankingsByPopularity"))
+                .Add("GetMostPopularPostPerBlog", () => ReadAll<dynamic>("GetMostPopularPostPerBlog"))
+                .Add("GetPostsCountPerCategory", () => ReadAll<dynamic>("GetPostsCountPerCategory"))
+                .Add("GetAverageRatingOfPostsPerCategory", () => ReadAll<dynamic> ("GetAverageRatingOfPostsPerCategory"))
                 .Add("Exit", ConsoleMenu.Close);
 
 
@@ -125,6 +164,7 @@ namespace BlogApp.Client
                 .Add("Blogs", () => blogSubMenu.Show())
                 .Add("Posts", () => postSubMenu.Show())
                 .Add("Comments", () => commentSubMenu.Show())
+                .Add("Stats", () => statSubMenu.Show())
                 .Add("Exit", ConsoleMenu.Close);
 
             menu.Show();
