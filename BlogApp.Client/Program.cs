@@ -83,10 +83,10 @@ namespace BlogApp.Client
             Console.ReadLine();
         }
 
-        static void ReadAll<T>(string stat)
+        static void ReadStat(string statEndpoint)
         {
             Console.Clear();
-            List<T> items = rest.Get<T>($"Stats/{stat}");
+            List<dynamic> items = rest.Get<dynamic>($"Stats/{statEndpoint}");
             foreach (var item in items)
             {
                 Console.WriteLine(item);
@@ -159,11 +159,11 @@ namespace BlogApp.Client
                 .Add("Exit", ConsoleMenu.Close);
 
             var statSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("GetAvgNumberOfComments", () => ReadAll<dynamic>("GetAvgNumberOfComments"))
-                .Add("GetBlogRankingsByPopularity", () => ReadAll<dynamic>("GetBlogRankingsByPopularity"))
-                .Add("GetMostPopularPostPerBlog", () => ReadAll<dynamic>("GetMostPopularPostPerBlog"))
-                .Add("GetPostsCountPerCategory", () => ReadAll<dynamic>("GetPostsCountPerCategory"))
-                .Add("GetAverageRatingOfPostsPerCategory", () => ReadAll<dynamic> ("GetAverageRatingOfPostsPerCategory"))
+                .Add("GetAvgNumberOfComments", () => ReadStat("GetAvgNumberOfComments"))
+                .Add("GetBlogRankingsByPopularity", () => ReadStat("GetBlogRankingsByPopularity"))
+                .Add("GetMostPopularPostPerBlog", () => ReadStat("GetMostPopularPostPerBlog"))
+                .Add("GetPostsCountPerCategory", () => ReadStat("GetPostsCountPerCategory"))
+                .Add("GetAverageRatingOfPostsPerCategory", () => ReadStat("GetAverageRatingOfPostsPerCategory"))
                 .Add("Exit", ConsoleMenu.Close);
 
 
