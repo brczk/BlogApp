@@ -69,6 +69,25 @@ namespace BlogApp.Logic.Classes
 
         #endregion
         #region Non-CRUD
+        public IEnumerable<AvgNumberOfCommentsInfo> GetAverageNumberOfCommentsPerPost()
+        {
+            var blogs = repo.ReadAll().ToList();
+            var AverageNumberOfCommentsPerPost = new List<AvgNumberOfCommentsInfo>();
+            foreach (var blog in blogs)
+            {
+                double TotalNumberOfComments = 0;
+                foreach (var post in blog.Posts)
+                {
+                    TotalNumberOfComments += post.Comments.Count;
+                }
+                AverageNumberOfCommentsPerPost.Add(new AvgNumberOfCommentsInfo()
+                {
+                    BlogName = blog.BlogName,
+                    AvgNumberOfComments = TotalNumberOfComments / (blog.Posts.Count == 0 ? 1 : blog.Posts.Count)
+                });
+            }
+            return AverageNumberOfCommentsPerPost;
+        }
         public IEnumerable<BlogRankingInfo> GetBlogRankingsByPopularity()
         {
             var blogs = repo.ReadAll();
@@ -143,36 +162,12 @@ namespace BlogApp.Logic.Classes
             }
             return CategoryPostRatingAvgs;
         }
-        
-        public IEnumerable<AvgNumberOfCommentsInfo> GetAverageNumberOfCommentsPerPost()
-        {
-            var blogs = repo.ReadAll().ToList();
-            var AverageNumberOfCommentsPerPost = new List<AvgNumberOfCommentsInfo>();
-            foreach (var blog in blogs)
-            {
-                double TotalNumberOfComments = 0;
-                foreach (var post in blog.Posts)
-                {
-                    TotalNumberOfComments += post.Comments.Count;
-                }
-                AverageNumberOfCommentsPerPost.Add(new AvgNumberOfCommentsInfo()
-                {
-                    BlogName = blog.BlogName,
-                    AvgNumberOfComments = TotalNumberOfComments / (blog.Posts.Count == 0 ? 1 : blog.Posts.Count)
-                });
-            }
-            return AverageNumberOfCommentsPerPost;
-        }
         #endregion
     }
 
     #region Non-crud helper classes
     public class BlogRankingInfo
     {
-        public BlogRankingInfo()
-        {
-        }
-
         public string BlogName { get; set; }
         public int TotalNumberOfComments { get; set; }
 
@@ -211,11 +206,8 @@ namespace BlogApp.Logic.Classes
 
     public class AvgNumberOfCommentsInfo
     {
-        public string BlogName;
-        public double AvgNumberOfComments;
-        public AvgNumberOfCommentsInfo()
-        {
-        }
+        public string BlogName { get; set; }
+        public double AvgNumberOfComments { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -232,9 +224,6 @@ namespace BlogApp.Logic.Classes
 
     public class CategoryAvgPostRatingInfo
     {
-        public CategoryAvgPostRatingInfo()
-        {
-        }
 
         public string CategoryName { get; set; }
         public double CategoryAvgPostRating { get; set; }
@@ -256,10 +245,7 @@ namespace BlogApp.Logic.Classes
     {
         public string CategoryName { get; set; }
         public int CategoryCount {  get; set; }
-        public CategoryPostCountInfo()
-        {
-        }
-
+        
         public override bool Equals(object obj)
         {
             return obj is CategoryPostCountInfo info &&
