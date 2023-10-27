@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BlogApp.Models
@@ -35,8 +36,10 @@ namespace BlogApp.Models
 
         #region Navigation
         [NotMapped]
+        [JsonIgnore]
         public virtual Blog Blog { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
         #endregion
 

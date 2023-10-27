@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace BlogApp.Models
 {
@@ -28,6 +29,7 @@ namespace BlogApp.Models
 
         #region Navigation
         [NotMapped]
+        [JsonIgnore]
         public virtual Post Post { get; set; }
         #endregion
 
