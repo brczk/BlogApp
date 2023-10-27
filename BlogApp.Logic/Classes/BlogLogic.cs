@@ -29,7 +29,7 @@ namespace BlogApp.Logic.Classes
                 throw new ArgumentException("Short blog name");
             }
 
-            if (item.Id < 0)
+            if (item.Id < 1)
             {
                 throw new ArgumentException("Invalid ID");
             }
@@ -38,6 +38,7 @@ namespace BlogApp.Logic.Classes
 
         public void Delete(int id)
         {
+            this.Read(id);
             repo.Delete(id);
         }
 
@@ -46,7 +47,7 @@ namespace BlogApp.Logic.Classes
             var blog = repo.Read(id);
             if (blog == null)
             {
-                throw new ArgumentException("Non-existent blog");
+                throw new NullReferenceException("Non-existent blog");
             }
             return blog;
         }
@@ -58,6 +59,11 @@ namespace BlogApp.Logic.Classes
 
         public void Update(Blog item)
         {
+            this.Read(item.Id);
+            if (item.BlogName.Length < 5)
+            {
+                throw new ArgumentException("Short blog name");
+            }
             repo.Update(item);
         }
 

@@ -81,8 +81,107 @@ namespace BlogApp.Test
             cl = new CommentLogic(cRepoMock.Object);
         }
 
+        #region Crud
+        #region create
+        [Test]
+        [Category("Crud")]
+        public void CreateValidBlog()
+        {
+            Blog blog = new Blog()
+            { 
+                Id = 3,
+                BlogName = "blog3",
+            };
+            bl.Create(blog);
+            bRepoMock.Verify(t => t.Create(blog), Times.Once);
+        }
+        [Test]
+        [Category("Crud")]
+        public void CreateInvalidBlog()
+        {
+            Blog blog = new Blog()
+            {
+                Id = -1,
+                BlogName = "bl",
+            };
+            try
+            {
+                bl.Create(blog);
+            }
+            catch
+            {
+
+            }
+            bRepoMock.Verify(t => t.Create(blog), Times.Never);
+        }
+        [Test]
+        [Category("Crud")]
+        public void CreateValidPost()
+        {
+            Post post = new Post()
+            {
+                Id = 100,
+                Content = "AAAAAAAAAAAAAAAAAAA"
+            };
+            pl.Create(post);
+            pRepoMock.Verify(t => t.Create(post), Times.Once);
+        }
+        [Test]
+        [Category("Crud")]
+        public void CreateInvalidPost()
+        {
+            Post post = new Post()
+            {
+                Id = -1,
+                Content = "kek",
+            };
+            try
+            {
+                pl.Create(post);
+            }
+            catch
+            {
+
+            }
+            pRepoMock.Verify(t => t.Create(post), Times.Never);
+        }
+        [Test]
+        [Category("Crud")]
+        public void CreateValidComment()
+        {
+            Comment comment = new Comment()
+            {
+                Id = 100,
+                Content = "AAAAAAAAAAAAAAAAAAA"
+            };
+            cl.Create(comment);
+            cRepoMock.Verify(t => t.Create(comment), Times.Once);
+        }
+        [Test]
+        [Category("Crud")]
+        public void CreateInvalidComment()
+        {
+            Comment comment = new Comment()
+            {
+                Id = -1,
+                Content = "kek",
+            };
+            try
+            {
+                cl.Create(comment);
+            }
+            catch
+            {
+
+            }
+            cRepoMock.Verify(t => t.Create(comment), Times.Never);
+        }
+        #endregion
+        #endregion
+
         #region Non-crud
         [Test]
+        [Category("Non-crud")]
         public void GetPostsCountPerCategoryTest()
         {
             var expected = new List<CategoryPostCountInfo>
@@ -103,6 +202,7 @@ namespace BlogApp.Test
         }
 
         [Test]
+        [Category("Non-crud")]
         public void GetAverageRatingOfPostsPerCategoryTest()
         {
             var expected = new List<CategoryAvgPostRatingInfo>
@@ -123,6 +223,7 @@ namespace BlogApp.Test
         }
 
         [Test]
+        [Category("Non-crud")]
         public void GetAverageNumberOfCommentsPerPostTest()
         {
             var expected = new List<AvgNumberOfCommentsInfo>
@@ -143,6 +244,7 @@ namespace BlogApp.Test
         }
 
         [Test]
+        [Category("Non-crud")]
         public void GetMostPopularPostPerBlogTest()
         {
             var expected = new List<MostPopularPostInfo>
@@ -165,6 +267,7 @@ namespace BlogApp.Test
         }
 
         [Test]
+        [Category("Non-crud")]
         public void GetBlogRankingsByPopularityTest()
         {
             var expected = new List<BlogRankingInfo>()

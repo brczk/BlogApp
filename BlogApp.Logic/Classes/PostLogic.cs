@@ -26,7 +26,7 @@ namespace BlogApp.Logic.Classes
                 throw new ArgumentException("Too short content");
             }
 
-            if (item.Id < 0)
+            if (item.Id < 1)
             {
                 throw new ArgumentException("Invalid ID");
             }
@@ -35,6 +35,7 @@ namespace BlogApp.Logic.Classes
 
         public void Delete(int id)
         {
+            this.Read(id);
             repo.Delete(id);
         }
 
@@ -43,7 +44,7 @@ namespace BlogApp.Logic.Classes
             var post = repo.Read(id);
             if (post == null)
             {
-                throw new ArgumentException("Non-existent post");
+                throw new NullReferenceException("Non-existent post");
             }
             return post;
         }
@@ -55,6 +56,11 @@ namespace BlogApp.Logic.Classes
 
         public void Update(Post item)
         {
+            this.Read(item.Id);
+            if (item.Content.Length < 5)
+            {
+                throw new ArgumentException("Too short content");
+            }
             repo.Update(item);
         }
     }
