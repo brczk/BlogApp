@@ -39,7 +39,6 @@ namespace BlogApp.Models
         [JsonIgnore]
         public virtual Blog Blog { get; set; }
         [NotMapped]
-        [JsonIgnore]
         public virtual ICollection<Comment> Comments { get; set; }
         #endregion
 
