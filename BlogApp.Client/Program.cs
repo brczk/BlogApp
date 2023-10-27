@@ -13,7 +13,7 @@ namespace BlogApp.Client
     {
         static RestService rest;
         delegate object GetPropValue(string propName);
-        delegate void CUD(GetPropValue method);
+        delegate void CRUD(GetPropValue method);
 
         static void Create<T>(GetPropValue method)
         {
@@ -41,13 +41,23 @@ namespace BlogApp.Client
             rest.Post(instance, t.Name);
         }
 
+        static void Read<T>(GetPropValue method)
+        {
+            string id = method("ID").ToString();
+            T item = rest.Get<T>(int.Parse(id), typeof(T).Name);
+            Console.Clear();
+            Console.WriteLine(item);
+        }
+
         static void ReadAll<T>()
         {
+            Console.Clear();
             List<T> items = rest.Get<T>(typeof(T).Name);
             foreach (var item in items)
             {
                 Console.WriteLine(item);
             }
+            Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
 
@@ -59,10 +69,11 @@ namespace BlogApp.Client
             {
                 Console.WriteLine(item);
             }
+            Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
 
-        static void CUDWrapper(CUD action, GetPropValue method)
+        static void Wrapper(CRUD action, GetPropValue method)
         {
             try
             {
@@ -72,12 +83,13 @@ namespace BlogApp.Client
             {
                 Console.WriteLine("Parse error.");
             }
-            catch (ArgumentException e)
+            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.Message);
             }
             finally
             {
+                Console.WriteLine("Press any key...");
                 Console.ReadLine();
             }
         }
@@ -131,24 +143,27 @@ namespace BlogApp.Client
             rest = new RestService("http://localhost:5828/", "blog");
 
             var blogSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => CUDWrapper(Create<Blog>,ReadProp))
+                .Add("Create", () => Wrapper(Create<Blog>,ReadProp))
+                .Add("Read", () => Wrapper(Read<Blog>, ReadProp))
                 .Add("ReadAll", () => ReadAll<Blog>())
-                .Add("Update", () => CUDWrapper(Update<Blog>, ReadProp))
-                .Add("Delete", () => CUDWrapper(Delete<Blog>, ReadProp))
+                .Add("Update", () => Wrapper(Update<Blog>, ReadProp))
+                .Add("Delete", () => Wrapper(Delete<Blog>, ReadProp))
                 .Add("Exit", ConsoleMenu.Close);
 
             var postSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => CUDWrapper(Create<Post>, ReadProp))
+                .Add("Create", () => Wrapper(Create<Post>, ReadProp))
+                .Add("Read", () => Wrapper(Read<Post>, ReadProp))
                 .Add("ReadAll", () => ReadAll<Post>())
-                .Add("Update", () => CUDWrapper(Update<Post>, ReadProp))
-                .Add("Delete", () => CUDWrapper(Delete<Post>, ReadProp))
+                .Add("Update", () => Wrapper(Update<Post>, ReadProp))
+                .Add("Delete", () => Wrapper(Delete<Post>, ReadProp))
                 .Add("Exit", ConsoleMenu.Close);
 
             var commentSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => CUDWrapper(Create<Comment>, ReadProp))
+                .Add("Create", () => Wrapper(Create<Comment>, ReadProp))
+                .Add("Read", () => Wrapper(Read<Comment>, ReadProp))
                 .Add("ReadAll", () => ReadAll<Comment>())
-                .Add("Update", () => CUDWrapper(Update<Comment>, ReadProp))
-                .Add("Delete", () => CUDWrapper(Delete<Comment>, ReadProp))
+                .Add("Update", () => Wrapper(Update<Comment>, ReadProp))
+                .Add("Delete", () => Wrapper(Delete<Comment>, ReadProp))
                 .Add("Exit", ConsoleMenu.Close);
 
             var statSubMenu = new ConsoleMenu(args, level: 1)

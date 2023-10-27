@@ -56,7 +56,7 @@ namespace BlogApp.Models
 
         public override string ToString()
         {
-            return $"Blog: {this.BlogId} - Author: {this.PostAuthor} - Category: {this.Category}\nContent: {this.Content}\n";
+            return $"ID: {this.Id} - Blog: {this.BlogId} - Author: {this.PostAuthor} - Category: {this.Category}\nContent: {this.Content}\n";
         }
     }
 }
