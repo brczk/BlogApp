@@ -24,9 +24,12 @@ namespace BlogApp.Repository.ModelRepositories
         public override void Update(Blog item)
         {
             var old = Read(item.Id);
-            foreach(var prop in old.GetType().GetProperties())
+            foreach (var prop in old.GetType().GetProperties())
             {
-                prop.SetValue(item, prop.GetValue(item));
+                if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
+                {
+                    prop.SetValue(old, prop.GetValue(item));
+                }
             }
             ctx.SaveChanges();
         }
