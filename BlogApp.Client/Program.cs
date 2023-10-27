@@ -15,6 +15,27 @@ namespace BlogApp.Client
         delegate object GetPropValue(string propName);
         delegate void CRUD(GetPropValue method);
 
+        static void Wrapper(CRUD action, GetPropValue method)
+        {
+            try
+            {
+                action(method);
+            }
+            catch (Exception ex) when (ex is TargetInvocationException || ex is FormatException)
+            {
+                Console.WriteLine("Parse error.");
+            }
+            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Press any key...");
+                Console.ReadLine();
+            }
+        }
+
         static void Create<T>(GetPropValue method)
         {
             Type t = typeof(T);
@@ -41,6 +62,7 @@ namespace BlogApp.Client
             rest.Post(instance, t.Name);
         }
 
+        #region Read
         static void Read<T>(GetPropValue method)
         {
             string id = method("ID").ToString();
@@ -72,35 +94,13 @@ namespace BlogApp.Client
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
-
-        static void Wrapper(CRUD action, GetPropValue method)
-        {
-            try
-            {
-                action(method);
-            }
-            catch (Exception ex) when (ex is TargetInvocationException || ex is FormatException)
-            {
-                Console.WriteLine("Parse error.");
-            }
-            catch (Exception ex) when (ex is ArgumentException || ex is NullReferenceException)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                Console.WriteLine("Press any key...");
-                Console.ReadLine();
-            }
-        }
+        #endregion
 
         static void Update<T>(GetPropValue method)
         {
             Type t = typeof(T);
-            Console.Clear();
-            Console.Write("ID: ");
-            int id = int.Parse(Console.ReadLine());
-            T item = rest.Get<T>(id, t.Name);
+            string id = method("ID").ToString();
+            T item = rest.Get<T>(int.Parse(id), t.Name);
             foreach (var prop in t.GetProperties())
             {
                 if (prop.GetAccessors().FirstOrDefault(t => t.IsVirtual) == null)
@@ -129,41 +129,33 @@ namespace BlogApp.Client
             rest.Delete(int.Parse(id), typeof(T).Name);
         }
 
-        static string ReadProp(string propName)
-        {
-            Console.Clear();
-            Console.Write($"{propName}: ");
-            string value = Console.ReadLine();
-            return value;
-        }
-
-
+        
         static void Main(string[] args)
         {
             rest = new RestService("http://localhost:5828/", "blog");
 
             var blogSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => Wrapper(Create<Blog>,ReadProp))
-                .Add("Read", () => Wrapper(Read<Blog>, ReadProp))
+                .Add("Create", () => Wrapper(Create<Blog>,PropInput))
+                .Add("Read", () => Wrapper(Read<Blog>, PropInput))
                 .Add("ReadAll", () => ReadAll<Blog>())
-                .Add("Update", () => Wrapper(Update<Blog>, ReadProp))
-                .Add("Delete", () => Wrapper(Delete<Blog>, ReadProp))
+                .Add("Update", () => Wrapper(Update<Blog>, PropInput))
+                .Add("Delete", () => Wrapper(Delete<Blog>, PropInput))
                 .Add("Exit", ConsoleMenu.Close);
 
             var postSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => Wrapper(Create<Post>, ReadProp))
-                .Add("Read", () => Wrapper(Read<Post>, ReadProp))
+                .Add("Create", () => Wrapper(Create<Post>, PropInput))
+                .Add("Read", () => Wrapper(Read<Post>, PropInput))
                 .Add("ReadAll", () => ReadAll<Post>())
-                .Add("Update", () => Wrapper(Update<Post>, ReadProp))
-                .Add("Delete", () => Wrapper(Delete<Post>, ReadProp))
+                .Add("Update", () => Wrapper(Update<Post>, PropInput))
+                .Add("Delete", () => Wrapper(Delete<Post>, PropInput))
                 .Add("Exit", ConsoleMenu.Close);
 
             var commentSubMenu = new ConsoleMenu(args, level: 1)
-                .Add("Create", () => Wrapper(Create<Comment>, ReadProp))
-                .Add("Read", () => Wrapper(Read<Comment>, ReadProp))
+                .Add("Create", () => Wrapper(Create<Comment>, PropInput))
+                .Add("Read", () => Wrapper(Read<Comment>, PropInput))
                 .Add("ReadAll", () => ReadAll<Comment>())
-                .Add("Update", () => Wrapper(Update<Comment>, ReadProp))
-                .Add("Delete", () => Wrapper(Delete<Comment>, ReadProp))
+                .Add("Update", () => Wrapper(Update<Comment>, PropInput))
+                .Add("Delete", () => Wrapper(Delete<Comment>, PropInput))
                 .Add("Exit", ConsoleMenu.Close);
 
             var statSubMenu = new ConsoleMenu(args, level: 1)
@@ -183,6 +175,14 @@ namespace BlogApp.Client
                 .Add("Exit", ConsoleMenu.Close);
 
             menu.Show();
+        }
+
+        static string PropInput(string propName)
+        {
+            Console.Clear();
+            Console.Write($"{propName}: ");
+            string value = Console.ReadLine();
+            return value;
         }
     }
 }
