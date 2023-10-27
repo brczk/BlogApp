@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace BlogApp.Models
@@ -44,5 +45,12 @@ namespace BlogApp.Models
         [Required]
         [Range(1, 10)]
         public int PostRating { get; set; }
+
+        public override string ToString()
+        {
+            StringBuilder stars = new StringBuilder();
+            stars.Append('*', this.PostRating);
+            return $"ID: {this.Id} - Post:{this.PostId} - Rating: {stars}\nContent: {this.Content}\n";
+        }
     }
 }

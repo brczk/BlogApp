@@ -34,14 +34,6 @@ namespace BlogApp.Models
         public int BlogId { get; set; }
         #endregion
 
-        #region Navigation
-        [NotMapped]
-        [JsonIgnore]
-        public virtual Blog Blog { get; set; }
-        [NotMapped]
-        public virtual ICollection<Comment> Comments { get; set; }
-        #endregion
-
         [Required]
         [StringLength(50)]
         public string PostAuthor { get; set; }
@@ -53,5 +45,18 @@ namespace BlogApp.Models
         [Required]
         [StringLength(50)]
         public string Category { get; set; }
+
+        #region Navigation
+        [NotMapped]
+        [JsonIgnore]
+        public virtual Blog Blog { get; set; }
+        [NotMapped]
+        public virtual ICollection<Comment> Comments { get; set; }
+        #endregion
+
+        public override string ToString()
+        {
+            return $"Blog: {this.BlogId} - Author: {this.PostAuthor} - Category: {this.Category}\nContent: {this.Content}\n";
+        }
     }
 }

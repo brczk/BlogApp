@@ -17,7 +17,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
         },
-        "MovieDbApp.Endpoint": {
+        "BlogApp.Endpoint": {
             "commandName": "Project",
             "dotnetRunMessages": "true",
             "launchBrowser": true,

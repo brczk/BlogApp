@@ -26,13 +26,18 @@ namespace BlogApp.Models
         public int Id { get; set; }
         #endregion
 
+        [Required]
+        [StringLength(240)]
+        public string BlogName { get; set; }
+
         #region Navigation
         [NotMapped]
         public virtual ICollection<Post> Posts { get; set; }
         #endregion
 
-        [Required]
-        [StringLength(240)]
-        public string BlogName { get; set; }
+        public override string ToString()
+        {
+            return $"ID: {this.Id} - Blog name: {this.BlogName}";
+        }
     }
 }
