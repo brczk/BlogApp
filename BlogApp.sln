@@ -13,13 +13,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogApp.Repository", "BlogA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogApp.Test", "BlogApp.Test\BlogApp.Test.csproj", "{7A4E3827-9067-40B4-9004-5C7041F07A6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApp.Endpoint", "BlogApp.Endpoint\BlogApp.Endpoint.csproj", "{4E723BD4-FA85-4264-8D65-D73BB7ADEFD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogApp.Endpoint", "BlogApp.Endpoint\BlogApp.Endpoint.csproj", "{4E723BD4-FA85-4264-8D65-D73BB7ADEFD0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{8416E33F-40DA-4047-BB58-602DDBD8A9E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{B72B81B3-2B72-487E-BA6C-0FC243E853E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{599E0F62-2B2F-447B-8EA9-D33C3492E636}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{6EF6BE59-FD08-4D84-B9AD-E78C6A7A2802}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
