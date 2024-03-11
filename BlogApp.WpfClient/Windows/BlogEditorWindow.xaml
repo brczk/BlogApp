@@ -15,12 +15,21 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Blogs}">
+        <ListBox ItemsSource="{Binding Blogs}" Grid.Column="0" SelectedItem="{Binding SelectedBlog}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding BlogName}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel Grid.Column="1">
+            <Label Content="Blog ID" />
+            <TextBox Text="{Binding Path=SelectedBlog.Id}"/>
+            <Label Content="Blog Name" />
+            <TextBox Text="{Binding SelectedBlog.BlogName}"/>
+            <Button Content="Create Blog" Command="{Binding CreateBlogCommand}" Margin="10" Padding="10"/>
+            <Button Content="Delete Blog" Command="{Binding DeleteBlogCommand}" Margin="10" Padding="10"/>
+            <Button Content="Update Blog" Command="{Binding UpdateBlogCommand}" Margin="10" Padding="10"/>
+        </StackPanel>
     </Grid>
 </Window>
