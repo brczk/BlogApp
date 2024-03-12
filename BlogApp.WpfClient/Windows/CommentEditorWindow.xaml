@@ -15,12 +15,23 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Comments}">
+        <ListBox ItemsSource="{Binding Comments}" SelectedItem="{Binding SelectedComment}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding Content}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel Grid.Column="1">
+            <Label Content="Commented by" />
+            <TextBox Text="{Binding SelectedComment.UserName}"/>
+            <Label Content="Content" />
+            <TextBox Text="{Binding SelectedComment.Content}"/>
+            <Label Content="Post rating" />
+            <TextBox Text="{Binding SelectedComment.PostRating}"/>
+            <Button Content="Create Comment" Command="{Binding CreateCommentCommand}" Margin="10" Padding="10"/>
+            <Button Content="Delete Comment" Command="{Binding DeleteCommentCommand}" Margin="10" Padding="10"/>
+            <Button Content="Update Comment" Command="{Binding UpdateCommentCommand}" Margin="10" Padding="10"/>
+        </StackPanel>
     </Grid>
 </Window>
