@@ -23,8 +23,6 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1">
-            <Label Content="Blog ID" />
-            <TextBox Text="{Binding Path=SelectedBlog.Id}"/>
             <Label Content="Blog Name" />
             <TextBox Text="{Binding SelectedBlog.BlogName}"/>
             <Button Content="Create Blog" Command="{Binding CreateBlogCommand}" Margin="10" Padding="10"/>
