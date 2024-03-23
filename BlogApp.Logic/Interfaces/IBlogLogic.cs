@@ -1,5 +1,6 @@
 ﻿using BlogApp.Logic.Classes;
 using BlogApp.Models;
+using BlogApp.Models.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,6 @@
 ﻿using BlogApp.Logic.Interfaces;
 using BlogApp.Models;
+using BlogApp.Models.Helpers;
 using BlogApp.Repository.GenericRepository;
 using BlogApp.Repository.Interfaces;
 using System;
@@ -164,99 +165,4 @@ namespace BlogApp.Logic.Classes
         }
         #endregion
     }
-
-    #region Non-crud helper classes
-    public class BlogRankingInfo
-    {
-        public string BlogName { get; set; }
-        public int TotalNumberOfComments { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return obj is BlogRankingInfo info &&
-                   BlogName == info.BlogName &&
-                   TotalNumberOfComments == info.TotalNumberOfComments;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(BlogName, TotalNumberOfComments);
-        }
-    }
-
-    public class MostPopularPostInfo
-    {
-        public string BlogName { get; set; }
-        public string MostPopularPostContent { get; set; }
-        public int NumberOfComments { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return obj is MostPopularPostInfo info &&
-                   BlogName == info.BlogName &&
-                   MostPopularPostContent == info.MostPopularPostContent &&
-                   NumberOfComments == info.NumberOfComments;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(BlogName, MostPopularPostContent, NumberOfComments);
-        }
-    }
-
-    public class AvgNumberOfCommentsInfo
-    {
-        public string BlogName { get; set; }
-        public double AvgNumberOfComments { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return obj is AvgNumberOfCommentsInfo info &&
-                   BlogName == info.BlogName &&
-                   AvgNumberOfComments == info.AvgNumberOfComments;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(BlogName, AvgNumberOfComments);
-        }
-    }
-
-    public class CategoryAvgPostRatingInfo
-    {
-
-        public string CategoryName { get; set; }
-        public double CategoryAvgPostRating { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            return obj is CategoryAvgPostRatingInfo info &&
-                   CategoryName == info.CategoryName &&
-                   CategoryAvgPostRating == info.CategoryAvgPostRating;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(CategoryName, CategoryAvgPostRating);
-        }
-    }
-
-    public class CategoryPostCountInfo
-    {
-        public string CategoryName { get; set; }
-        public int CategoryCount {  get; set; }
-        
-        public override bool Equals(object obj)
-        {
-            return obj is CategoryPostCountInfo info &&
-                   CategoryName == info.CategoryName &&
-                   CategoryCount == info.CategoryCount;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(CategoryName, CategoryCount);
-        }
-    }
-    #endregion
 }

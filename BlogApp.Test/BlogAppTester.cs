@@ -1,5 +1,6 @@
 ﻿using BlogApp.Logic.Classes;
 using BlogApp.Models;
+using BlogApp.Models.Helpers;
 using BlogApp.Repository.Database;
 using BlogApp.Repository.Interfaces;
 using Moq;
