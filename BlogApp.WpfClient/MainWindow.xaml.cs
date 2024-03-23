@@ -42,6 +42,9 @@ namespace BlogApp.WpfClient
                     case "Comment":
                         new CommentEditorWindow().Show();
                         break;
+                    case "Stats":
+                        new StatsWindow().Show();
+                        break;
                     default:
                         break;
                 }

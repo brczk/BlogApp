@@ -13,6 +13,7 @@
                 <ComboBoxItem Content="Blog" IsSelected="True"/>
                 <ComboBoxItem Content="Post"/>
                 <ComboBoxItem Content="Comment"/>
+                <ComboBoxItem Content="Stats"/>
             </ComboBox>
             <Button Content="Open" Margin="50, 10" Click="Button_OpenSelectedWindow"/>
         </StackPanel>
