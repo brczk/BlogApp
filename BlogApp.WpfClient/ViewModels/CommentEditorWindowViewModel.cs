@@ -59,7 +59,7 @@ namespace BlogApp.WpfClient.ViewModels
 
         public CommentEditorWindowViewModel()
         {
-            Comments = new RestCollection<Comment>("http://localhost:5828/", "comment");
+            Comments = new RestCollection<Comment>("http://localhost:5828/", "comment", "hub");
             CreateCommentCommand = new RelayCommand(() =>
             {
                 Comments.Add(new Comment()

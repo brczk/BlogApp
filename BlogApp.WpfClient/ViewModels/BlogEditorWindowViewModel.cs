@@ -56,7 +56,7 @@ namespace BlogApp.WpfClient.ViewModels
 
         public BlogEditorWindowViewModel()
         {
-            Blogs = new RestCollection<Blog>("http://localhost:5828/", "blog");
+            Blogs = new RestCollection<Blog>("http://localhost:5828/", "blog", "hub");
             CreateBlogCommand = new RelayCommand(() =>
             {
                 Blogs.Add(new Blog()
