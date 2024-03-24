@@ -1,3 +1,4 @@
+using BlogApp.Endpoint.Services;
 using BlogApp.Logic.Classes;
 using BlogApp.Logic.Interfaces;
 using BlogApp.Models;
@@ -36,6 +37,8 @@ namespace BlogApp.Endpoint
             services.AddTransient<IPostLogic, PostLogic>();
             services.AddTransient<ICommentLogic, CommentLogic>();
 
+            services.AddSignalR();
+
             services.AddControllers();
             services.AddSwaggerGen(t => t.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
@@ -70,6 +73,7 @@ namespace BlogApp.Endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalRHub>("/hub");
             });
         }
     }
