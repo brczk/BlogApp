@@ -38,6 +38,15 @@ namespace BlogApp.Endpoint
             services.AddTransient<ICommentLogic, CommentLogic>();
 
             services.AddSignalR();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => host == "http://localhost:32929")
+                        .AllowAnyHeader());
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(t => t.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -67,6 +76,8 @@ namespace BlogApp.Endpoint
             }));
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
