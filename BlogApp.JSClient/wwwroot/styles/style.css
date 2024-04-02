@@ -29,3 +29,12 @@ th {
 #table-selector {
     display: none;
 }
+
+
+table button {
+    margin-right: 2%;
+}
+
+#create-form {
+    margin: 2%;
+}
