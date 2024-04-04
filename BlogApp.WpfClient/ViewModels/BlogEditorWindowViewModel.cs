@@ -61,7 +61,6 @@ namespace BlogApp.WpfClient.ViewModels
             {
                 Blogs.Add(new Blog()
                 {
-                    Id = Blogs.Max(x => x.Id) + 1,
                     BlogName = SelectedBlog.BlogName
                 });
             });

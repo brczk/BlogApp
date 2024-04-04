@@ -67,7 +67,6 @@ namespace BlogApp.WpfClient.ViewModels
                     PostId = SelectedComment.PostId,
                     UserName = SelectedComment.UserName,
                     Content = SelectedComment.Content,
-                    Id = Comments.Max(x => x.Id) + 1,
                     PostRating = SelectedComment.PostRating
                 });
             });

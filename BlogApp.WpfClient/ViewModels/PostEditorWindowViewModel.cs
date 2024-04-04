@@ -63,7 +63,6 @@ namespace BlogApp.WpfClient.ViewModels
             {
                 Posts.Add(new Post()
                 {
-                    Id = Posts.Max(x => x.Id) + 1,
                     PostAuthor = SelectedPost.PostAuthor,
                     Content = SelectedPost.Content,
                     Category = SelectedPost.Category
