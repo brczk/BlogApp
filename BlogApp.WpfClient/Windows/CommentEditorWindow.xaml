@@ -18,12 +18,14 @@
         <ListBox ItemsSource="{Binding Comments}" SelectedItem="{Binding SelectedComment}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding Content}" />
+                    <StackPanel>
+                        <Label Content="{Binding Id}" ContentStringFormat="ID: {0}"/>
+                        <Label Content="{Binding Content}" />
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1">
-            <Label Content="{Binding SelectedComment.Id}" ContentStringFormat="ID: {0}"/>
             <Label Content="Post id"/>
             <TextBox Text="{Binding SelectedComment.PostId}"/>
             <Label Content="Commented by" />

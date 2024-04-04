@@ -18,12 +18,14 @@
         <ListBox ItemsSource="{Binding Blogs}" Grid.Column="0" SelectedItem="{Binding SelectedBlog}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding BlogName}" />
+                    <StackPanel>
+                        <Label Content="{Binding Id}" ContentStringFormat="ID: {0}"/>
+                        <Label Content="{Binding BlogName}" />
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1">
-            <Label Content="{Binding SelectedBlog.Id}" ContentStringFormat="ID: {0}"/>
             <Label Content="Blog Name" />
             <TextBox Text="{Binding SelectedBlog.BlogName}"/>
             <Button Content="Create Blog" Command="{Binding CreateBlogCommand}" Margin="10" Padding="10"/>
