@@ -44,10 +44,10 @@ namespace BlogApp.WpfClient.ViewModels
                 {
                     selectedComment = new Comment()
                     {
+                        Id = value.Id,
                         PostId = value.PostId,
                         UserName = value.UserName,
                         Content = value.Content,
-                        Id = value.Id,
                         PostRating = value.PostRating
                     };
                     OnPropertyChanged();

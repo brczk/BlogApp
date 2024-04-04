@@ -47,7 +47,8 @@ namespace BlogApp.WpfClient.ViewModels
                         Id = value.Id,
                         PostAuthor = value.PostAuthor,
                         Content = value.Content,
-                        Category = value.Category
+                        Category = value.Category,
+                        BlogId = value.BlogId
                     };
                     OnPropertyChanged();
                     (DeletePostCommand as RelayCommand).NotifyCanExecuteChanged();
@@ -65,7 +66,8 @@ namespace BlogApp.WpfClient.ViewModels
                 {
                     PostAuthor = SelectedPost.PostAuthor,
                     Content = SelectedPost.Content,
-                    Category = SelectedPost.Category
+                    Category = SelectedPost.Category,
+                    BlogId = SelectedPost.BlogId,
                 });
             });
 
