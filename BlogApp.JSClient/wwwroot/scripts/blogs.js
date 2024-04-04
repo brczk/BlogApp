@@ -110,7 +110,6 @@ function update() {
         .then(response => response)
         .then(data => {
             console.log('Success:', data);
-            selectedBlog = null;
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });

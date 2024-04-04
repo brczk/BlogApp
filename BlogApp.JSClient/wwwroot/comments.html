@@ -30,10 +30,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <div class="mb-3">
+                        <label for="postId">Rated post's id</label><br>
+                        <input type="text" class="form-control" id="postId" name="postId" value="">
+                        <label for="postRating">Post rating</label><br>
+                        <input type="number" class="form-control" id="postRating" name="postRating" value="1" min="1" max="10">
+                        <label for="commentUserName">Comment username</label><br>
+                        <input type="text" class="form-control" id="commentUserName" name="commentUserName" value="">
                         <label for="commentContent">Comment content</label><br>
-                        <input type="text" id="commentContent" name="commentContent" value="">
-                    </form>
+                        <input type="text" class="form-control" id="commentContent" name="commentContent" value="">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="update-button">Update</button>

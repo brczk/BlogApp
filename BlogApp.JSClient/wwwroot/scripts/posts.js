@@ -79,6 +79,9 @@ function loadIntoTable(data) {
 
 function fillForm(id) {
     selectedPost = posts.find(p => p['id'] == id);
+    document.getElementById("blogId").value = selectedPost["blogId"];
+    document.getElementById("postAuthor").value = selectedPost["postAuthor"];
+    document.getElementById("postCategory").value = selectedPost["category"];
     document.getElementById("postContent").value = selectedPost["content"];
 }
 
@@ -98,21 +101,24 @@ function remove(id) {
 
 function update() {
     let postContent = document.getElementById('postContent').value;
+    let postCategory = document.getElementById('postCategory').value;
+    let postAuthor = document.getElementById('postAuthor').value;
+    let blogId = document.getElementById('blogId').value;
     fetch('http://localhost:5828/post', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(
             {
                 id: selectedPost.id,
-                postAuthor: selectedPost.postAuthor,
-                category: selectedPost.category,
-                content: postContent
+                postAuthor: postAuthor,
+                category: postCategory,
+                content: postContent,
+                blogId: blogId
             })
     })
         .then(response => response)
         .then(data => {
             console.log('Success:', data);
-            selectedPost = null;
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });

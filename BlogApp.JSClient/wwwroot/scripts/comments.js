@@ -80,6 +80,9 @@ function loadIntoTable(data) {
 function fillForm(id) {
     selectedComment = comments.find(c => c['id'] == id);
     document.getElementById("commentContent").value = selectedComment["content"];
+    document.getElementById("postRating").value = selectedComment["postRating"];
+    document.getElementById("commentUserName").value = selectedComment["userName"];
+    document.getElementById("postId").value = selectedComment["postId"];
 }
 
 function remove(id) {
@@ -98,21 +101,26 @@ function remove(id) {
 
 function update() {
     let commentContent = document.getElementById('commentContent').value;
+    let postRating = document.getElementById('postRating').value;
+    let commentUserName = document.getElementById('commentUserName').value;
+    let postId = document.getElementById('postId').value;
+
+
     fetch('http://localhost:5828/comment', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', },
         body: JSON.stringify(
             {
                 id: selectedComment.id,
-                userName: selectedComment.userName,
-                postRating: selectedComment.postRating,
-                content: commentContent
+                userName: commentUserName,
+                postRating: postRating,
+                content: commentContent,
+                postId: postId
             })
     })
         .then(response => response)
         .then(data => {
             console.log('Success:', data);
-            selectedcomment = null;
             getdata();
         })
         .catch((error) => { console.error('Error:', error); });

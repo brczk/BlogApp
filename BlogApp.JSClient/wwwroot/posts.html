@@ -30,10 +30,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <div class="mb-3">
+                        <label for="blogId">Blog id</label><br>
+                        <input type="text" class="form-control" id="blogId" name="blogId" value="">
+                        <label for="postAuthor">Post author</label><br>
+                        <input type="text" class="form-control" id="postAuthor" name="postAuthor" value="">
+                        <label for="postCategory">Post category</label><br>
+                        <input type="text" class="form-control" id="postCategory" name="postCategory" value="">
                         <label for="postContent">Post content</label><br>
-                        <input type="text" id="postContent" name="postContent" value="">
-                    </form>
+                        <input type="text" class="form-control" id="postContent" name="postContent" value="">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" id="update-button">Update</button>
