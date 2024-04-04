@@ -23,15 +23,18 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1">
+            <Label Content="{Binding SelectedPost.Id}" ContentStringFormat="ID: {0}"/>
+            <Label Content="Blog id" />
+            <TextBox Text="{Binding SelectedPost.BlogId}"/>
             <Label Content="Posted by" />
             <TextBox Text="{Binding SelectedPost.PostAuthor}"/>
             <Label Content="Category" />
             <TextBox Text="{Binding SelectedPost.Category}"/>
             <Label Content="Content" />
             <TextBox Text="{Binding SelectedPost.Content}"/>
-            <Button Content="Create Comment" Command="{Binding CreatePostCommand}" Margin="10" Padding="10"/>
-            <Button Content="Delete Comment" Command="{Binding DeletePostCommand}" Margin="10" Padding="10"/>
-            <Button Content="Update Comment" Command="{Binding UpdatePostCommand}" Margin="10" Padding="10"/>
+            <Button Content="Create Post" Command="{Binding CreatePostCommand}" Margin="10" Padding="10"/>
+            <Button Content="Delete Post" Command="{Binding DeletePostCommand}" Margin="10" Padding="10"/>
+            <Button Content="Update Post" Command="{Binding UpdatePostCommand}" Margin="10" Padding="10"/>
         </StackPanel>
     </Grid>
 </Window>

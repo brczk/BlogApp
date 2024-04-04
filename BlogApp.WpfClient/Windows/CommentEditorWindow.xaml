@@ -23,6 +23,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <StackPanel Grid.Column="1">
+            <Label Content="{Binding SelectedComment.Id}" ContentStringFormat="ID: {0}"/>
+            <Label Content="Post id"/>
+            <TextBox Text="{Binding SelectedComment.PostId}"/>
             <Label Content="Commented by" />
             <TextBox Text="{Binding SelectedComment.UserName}"/>
             <Label Content="Content" />
