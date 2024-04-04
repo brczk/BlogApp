@@ -74,6 +74,7 @@ namespace BlogApp.WpfClient.ViewModels
             DeleteCommentCommand = new RelayCommand(() =>
             {
                 Comments.Delete(SelectedComment.Id);
+                SelectedComment = new Comment();
             }, () => SelectedComment != null);
 
             UpdateCommentCommand = new RelayCommand(() =>

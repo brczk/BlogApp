@@ -74,6 +74,7 @@ namespace BlogApp.WpfClient.ViewModels
             DeletePostCommand = new RelayCommand(() =>
             {
                 Posts.Delete(SelectedPost.Id);
+                SelectedPost = new Post();
             }, () => SelectedPost != null);
 
             UpdatePostCommand = new RelayCommand(() =>

@@ -44,8 +44,7 @@ namespace BlogApp.WpfClient.ViewModels
                     selectedBlog = new Blog()
                     {
                         Id = value.Id,
-                        BlogName = value.BlogName,
-                        Posts = value.Posts
+                        BlogName = value.BlogName
                     };
                     OnPropertyChanged();
                     (DeleteBlogCommand as RelayCommand).NotifyCanExecuteChanged();
@@ -61,15 +60,14 @@ namespace BlogApp.WpfClient.ViewModels
             {
                 Blogs.Add(new Blog()
                 {
-                    Id = SelectedBlog.Id,
-                    BlogName = SelectedBlog.BlogName,
-                    Posts = SelectedBlog.Posts
+                    BlogName = SelectedBlog.BlogName
                 });
             });
 
             DeleteBlogCommand = new RelayCommand(() =>
             {
                 Blogs.Delete(SelectedBlog.Id);
+                SelectedBlog = new Blog();
             }, () => SelectedBlog != null);
 
             UpdateBlogCommand = new RelayCommand(() =>
