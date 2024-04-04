@@ -61,7 +61,9 @@ namespace BlogApp.WpfClient.ViewModels
             {
                 Blogs.Add(new Blog()
                 {
-                    BlogName = SelectedBlog.BlogName
+                    Id = SelectedBlog.Id,
+                    BlogName = SelectedBlog.BlogName,
+                    Posts = SelectedBlog.Posts
                 });
             });
 

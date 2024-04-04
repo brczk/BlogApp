@@ -116,12 +116,15 @@ namespace BlogApp.Logic.Classes
             foreach (var blog in blogs)
             {
                 var MostPopularPost = blog.Posts.OrderByDescending(p => p.Comments.Count).FirstOrDefault();
-                MostPopularPosts.Add(new MostPopularPostInfo()
+                if (MostPopularPost != null)
                 {
-                    BlogName = blog.BlogName,
-                    MostPopularPostContent = MostPopularPost.Content,
-                    NumberOfComments = MostPopularPost.Comments.Count
-                });
+                    MostPopularPosts.Add(new MostPopularPostInfo()
+                    {
+                        BlogName = blog.BlogName,
+                        MostPopularPostContent = MostPopularPost.Content,
+                        NumberOfComments = MostPopularPost.Comments.Count
+                    });
+                }
             }
             return MostPopularPosts;
         }
@@ -154,7 +157,11 @@ namespace BlogApp.Logic.Classes
                 {
                     comments.AddRange(post.Comments);
                 }
-                double avg = comments.Average(c => c.PostRating);
+                double avg = 0;
+                if(comments.Count > 0)
+                {
+                    avg = comments.Average(c => c.PostRating);
+                }
                 CategoryPostRatingAvgs.Add(new CategoryAvgPostRatingInfo()
                 {
                     CategoryName = category.Key,
