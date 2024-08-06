@@ -1,4 +1,4 @@
-# BlogApp CRUD application 
+# Simple CRUD application 
 
 # Tech stack
 ## Backend
