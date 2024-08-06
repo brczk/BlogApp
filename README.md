@@ -1,7 +1,7 @@
 # BlogApp CRUD application 
 
 # Tech stack
-## Backend:
+## Backend
 - ASP.net Core WebAPI
 - SignalR
 - MSSQL InMemory database
